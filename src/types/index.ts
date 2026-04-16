@@ -1,7 +1,93 @@
 // ============================================================
 // TransRosa - Type Definitions
 // Empresa de Transportes Santa Rosa de Vegueta S.A.
+// Cooperativa de 50 socios
 // ============================================================
+
+// --- Partner / Socio ---
+export type PartnerStatus = 'active' | 'suspended' | 'inactive'
+
+export interface Partner {
+  id: string
+  user_id: string | null
+  partner_number: number // 1-50
+  first_name: string
+  last_name: string
+  dni: string
+  ruc: string | null
+  phone: string
+  email: string | null
+  photo_url: string | null
+  address: string
+  status: PartnerStatus
+  join_date: string
+  vehicles_count: number
+  is_driver: boolean // Can also be a driver
+  driver_id: string | null // If they drive, link to driver record
+  total_commission_paid: number
+  total_commission_pending: number
+  created_at: string
+  updated_at: string
+  // Joined
+  vehicles?: Vehicle[]
+}
+
+// --- Commission ---
+export type CommissionPeriod = 'daily' | 'monthly' | 'annual'
+export type CommissionStatus = 'paid' | 'pending' | 'overdue' | 'partial'
+
+export interface Commission {
+  id: string
+  partner_id: string
+  vehicle_id: string | null // null = applies to all partner vehicles
+  period: CommissionPeriod
+  amount: number
+  paid_amount: number
+  status: CommissionStatus
+  due_date: string
+  paid_date: string | null
+  payment_method: 'cash' | 'yape' | 'plin' | 'transfer' | 'bank_deposit'
+  receipt_number: string | null
+  notes: string | null
+  created_at: string
+  // Joined
+  partner?: Partner
+}
+
+// --- Compliance / Document Tracking ---
+export type ComplianceType = 'soat' | 'technical_review' | 'vehicle_card' | 'route_permit' | 'driver_license' | 'medical_cert' | 'background_check' | 'insurance'
+export type ComplianceStatus = 'valid' | 'expiring_soon' | 'expired' | 'missing'
+
+export interface ComplianceRecord {
+  id: string
+  entity_type: 'vehicle' | 'driver'
+  entity_id: string
+  partner_id: string
+  type: ComplianceType
+  document_number: string | null
+  issue_date: string | null
+  expiry_date: string
+  status: ComplianceStatus
+  document_url: string | null
+  notes: string | null
+  verified_by: string | null
+  verified_at: string | null
+  created_at: string
+}
+
+// --- Partner Dashboard Stats ---
+export interface PartnerDashboardStats {
+  total_partners: number
+  active_partners: number
+  suspended_partners: number
+  total_vehicles: number
+  compliant_vehicles: number
+  non_compliant_vehicles: number
+  total_commissions_collected: number
+  total_commissions_pending: number
+  overdue_commissions: number
+  compliance_rate: number // percentage
+}
 
 // --- Vehicle / Fleet ---
 export type VehicleStatus = 'active' | 'maintenance' | 'inactive' | 'en_route'
@@ -10,6 +96,7 @@ export interface Vehicle {
   id: string
   plate_number: string
   internal_number: number
+  partner_id: string
   brand: string
   model: string
   year: number
@@ -25,6 +112,8 @@ export interface Vehicle {
   photo_url: string | null
   created_at: string
   updated_at: string
+  // Joined
+  partner?: Partner
 }
 
 // --- Driver ---
@@ -223,16 +312,22 @@ export interface FleetHealth {
   vehicles_needing_service: number
   soat_expiring_soon: number
   review_expiring_soon: number
+  compliant_vehicles: number
+  non_compliant_vehicles: number
 }
 
 // --- Dashboard Stats ---
 export interface DashboardStats {
   active_vehicles: number
   total_drivers: number
+  total_partners: number
+  active_partners: number
   trips_today: number
   passengers_today: number
   revenue_today: number
   active_routes: number
+  total_commissions_collected: number
+  total_commissions_pending: number
   fleet_health: FleetHealth
   recent_trips: Trip[]
   alerts: Alert[]
@@ -248,7 +343,7 @@ export interface Alert {
 }
 
 // --- User / Auth ---
-export type UserRole = 'admin' | 'manager' | 'dispatcher' | 'driver' | 'passenger'
+export type UserRole = 'admin' | 'manager' | 'dispatcher' | 'driver' | 'partner' | 'passenger'
 
 export interface UserProfile {
   id: string

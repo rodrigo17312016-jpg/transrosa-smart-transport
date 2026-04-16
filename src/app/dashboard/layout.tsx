@@ -14,6 +14,7 @@ import {
   DollarSign,
   Brain,
   Settings,
+  Handshake,
   Bell,
   Search,
   Menu,
@@ -34,6 +35,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Wrench,
   DollarSign,
   Brain,
+  Handshake,
   Settings,
 }
 
@@ -51,6 +53,7 @@ function getBreadcrumbs(pathname: string) {
     mantenimiento: 'Mantenimiento',
     finanzas: 'Finanzas',
     analytics: 'Analytics IA',
+    socios: 'Socios',
     configuracion: 'Configuracion',
   }
 

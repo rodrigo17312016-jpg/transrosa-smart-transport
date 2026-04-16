@@ -7,13 +7,13 @@ export const APP_CONFIG = {
   fullName: 'Empresa de Transportes Santa Rosa de Vegueta S.A.',
   shortName: 'ET Santa Rosa',
   ruc: '20361745281',
-  slogan: 'Conectando Vegueta y Huacho con tecnología de última generación',
+  slogan: 'Cooperativa de transporte con 50 socios conectando Vegueta y Huacho',
   description: 'Plataforma inteligente de gestión de transporte público interurbano',
   version: '1.0.0',
   contact: {
     phone: '+51 993 370 254',
     email: 'info@transrosa.pe',
-    address: 'Calle Adan Acevedo Nº701, Huacho, Lima',
+    address: 'Calle Adan Acevedo N\u00ba701, Huacho, Lima',
   },
   social: {
     facebook: 'https://facebook.com/transrosa',
@@ -86,7 +86,9 @@ export const ROUTE_INFO = {
     estimatedDuration: 45, // minutes
   },
   fleet: {
-    totalVehicles: 50,
+    totalVehicles: 100,
+    totalPartners: 50,
+    vehiclesPerPartner: 2,
     capacity: 11, // including driver
     passengerCapacity: 10,
     vehicleType: 'Minivan',
@@ -98,6 +100,12 @@ export const ROUTE_INFO = {
     senior: 2.00,
     child: 1.50,
   },
+} as const
+
+export const COMMISSION_RATES = {
+  daily: 25,      // S/25 per vehicle per day
+  monthly: 600,   // S/600 per vehicle per month
+  annual: 6500,   // S/6,500 per vehicle per year
 } as const
 
 export const MAP_CONFIG = {
@@ -132,6 +140,7 @@ export const NAV_ITEMS = [
 
 export const DASHBOARD_NAV = [
   { label: 'Dashboard', href: '/dashboard', icon: 'LayoutDashboard' },
+  { label: 'Socios', href: '/dashboard/socios', icon: 'Handshake' },
   { label: 'Flota', href: '/dashboard/flota', icon: 'Bus' },
   { label: 'Conductores', href: '/dashboard/conductores', icon: 'Users' },
   { label: 'GPS en Vivo', href: '/dashboard/gps', icon: 'MapPin' },

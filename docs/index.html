@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TransRosa | Plataforma Inteligente de Transporte - ET Santa Rosa de Vegueta S.A.</title>
-  <meta name="description" content="Sistema de gestión de transporte inteligente para la Empresa de Transportes Santa Rosa de Vegueta S.A. Ruta Huacho - Vegueta con GPS en tiempo real, boletos digitales e IA.">
+  <meta name="description" content="Cooperativa de transporte inteligente con 50 socios y 100 vehiculos. Ruta Huacho - Vegueta con GPS en tiempo real, boletos digitales e IA.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚐</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -70,21 +70,21 @@
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 10px 24px; border-radius: 12px; font-size: 14px; font-weight: 600;
-      transition: all 0.2s; cursor: pointer; border: none;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1); cursor: pointer; border: none;
     }
     .btn-primary {
       background: var(--primary); color: white;
       box-shadow: 0 4px 14px rgba(220,38,38,0.25);
     }
-    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(220,38,38,0.35); }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(220,38,38,0.35); }
     .btn-secondary { background: var(--secondary); color: white; }
-    .btn-secondary:hover { background: var(--secondary-dark); }
+    .btn-secondary:hover { background: var(--secondary-dark); transform: translateY(-1px); }
     .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
     .btn-outline:hover { background: var(--primary); color: white; }
     .btn-white { background: white; color: var(--primary); }
-    .btn-white:hover { background: var(--gray-100); }
+    .btn-white:hover { background: var(--gray-100); transform: translateY(-1px); }
     .btn-ghost { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
-    .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
 
     /* ===== HERO ===== */
     .hero {
@@ -96,11 +96,13 @@
       content: ''; position: absolute; top: -50%; right: -20%;
       width: 800px; height: 800px; border-radius: 50%;
       background: radial-gradient(circle, rgba(220,38,38,0.12) 0%, transparent 70%);
+      animation: heroShapePulse 8s ease-in-out infinite;
     }
     .hero::after {
       content: ''; position: absolute; bottom: -30%; left: -10%;
       width: 600px; height: 600px; border-radius: 50%;
       background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+      animation: heroShapePulse 10s ease-in-out infinite reverse;
     }
     .hero-grid {
       position: absolute; inset: 0; opacity: 0.04;
@@ -117,6 +119,7 @@
       display: inline-flex; align-items: center; gap: 8px;
       padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1);
       border-radius: 50px; margin-bottom: 24px; backdrop-filter: blur(10px);
+      animation: badgeGlow 4s ease-in-out infinite;
     }
     .hero-badge span { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 500; }
     .hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
@@ -174,7 +177,7 @@
       position: absolute; background: white; border-radius: 16px;
       padding: 14px 18px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
       display: flex; align-items: center; gap: 12px;
-      animation: float 6s ease-in-out infinite;
+      animation: floatSmooth 6s cubic-bezier(0.37,0,0.63,1) infinite;
     }
     .float-card.top { top: -20px; right: -20px; animation-delay: 0s; }
     .float-card.bottom { bottom: -20px; left: -20px; animation-delay: 2s; }
@@ -193,13 +196,15 @@
     .stat-card {
       background: white; border-radius: 20px; padding: 28px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-100);
-      transition: all 0.3s; position: relative; overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1); position: relative; overflow: hidden;
     }
-    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+    .stat-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.12); }
     .stat-icon {
       width: 48px; height: 48px; border-radius: 16px;
       display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
     }
+    .stat-card:hover .stat-icon { transform: scale(1.1); }
     .stat-icon svg { width: 24px; height: 24px; stroke-width: 2; fill: none; }
     .stat-val { font-size: 36px; font-weight: 900; color: var(--gray-900); }
     .stat-label { font-size: 14px; color: var(--gray-500); margin-top: 4px; }
@@ -223,13 +228,15 @@
     .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
     .feature-card {
       background: white; border-radius: 20px; padding: 32px;
-      border: 1px solid var(--gray-100); transition: all 0.3s;
+      border: 1px solid var(--gray-100); transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
     }
-    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+    .feature-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
     .feature-icon {
       width: 56px; height: 56px; border-radius: 16px;
       display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
     }
+    .feature-card:hover .feature-icon { transform: scale(1.1); }
     .feature-icon svg { width: 28px; height: 28px; stroke-width: 2; fill: none; }
     .feature-tag {
       display: inline-block; padding: 4px 12px; border-radius: 50px;
@@ -244,7 +251,9 @@
     .route-info-item {
       display: flex; gap: 16px; padding: 16px; background: var(--gray-50);
       border-radius: 14px; margin-bottom: 12px; align-items: flex-start;
+      transition: all 0.3s;
     }
+    .route-info-item:hover { background: var(--gray-100); transform: translateX(4px); }
     .route-info-item .ri-icon { font-size: 20px; flex-shrink: 0; }
     .route-info-item .ri-label { font-size: 14px; font-weight: 700; color: var(--gray-900); }
     .route-info-item .ri-value { font-size: 13px; color: var(--gray-500); }
@@ -274,23 +283,57 @@
     .fare-card {
       position: absolute; bottom: -24px; right: -24px; background: white;
       border-radius: 20px; padding: 24px; box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s;
     }
+    .fare-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.15); }
     .fare-label { font-size: 11px; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
     .fare-amount { font-size: 36px; font-weight: 900; color: var(--primary); }
     .fare-sub { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+    /* ===== COOPERATIVE MODEL ===== */
+    .coop-section {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FFF 50%, #FEF2F2 100%);
+    }
+    .coop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .coop-card {
+      background: white; border-radius: 20px; padding: 32px;
+      border: 1px solid var(--gray-100); position: relative; overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .coop-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      transition: height 0.4s;
+    }
+    .coop-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+    .coop-card:hover::before { height: 6px; }
+    .coop-card .coop-icon {
+      width: 60px; height: 60px; border-radius: 18px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .coop-card:hover .coop-icon { transform: scale(1.1); }
+    .coop-card .coop-icon svg { width: 28px; height: 28px; stroke-width: 2; fill: none; }
+    .coop-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .coop-card p { font-size: 14px; color: var(--gray-500); line-height: 1.7; }
+    .coop-highlight {
+      display: inline-block; margin-top: 16px; padding: 6px 14px; border-radius: 10px;
+      font-size: 13px; font-weight: 700;
+    }
 
     /* ===== DASHBOARD PREVIEW ===== */
     .dashboard-section { background: var(--gray-50); }
     .modules-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; }
     .module-card {
       background: white; border-radius: 16px; padding: 24px;
-      border: 1px solid var(--gray-100); transition: all 0.3s; cursor: pointer;
+      border: 1px solid var(--gray-100); transition: all 0.4s cubic-bezier(0.4,0,0.2,1); cursor: pointer;
     }
-    .module-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); border-color: var(--primary); }
+    .module-card:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.08); border-color: var(--primary); }
     .module-icon {
       width: 48px; height: 48px; border-radius: 14px;
       display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+      transition: transform 0.4s;
     }
+    .module-card:hover .module-icon { transform: scale(1.1); }
     .module-icon svg { width: 24px; height: 24px; stroke-width: 2; fill: none; }
     .module-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
     .module-card p { font-size: 12px; color: var(--gray-500); }
@@ -299,9 +342,9 @@
     .tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; }
     .tech-card {
       background: var(--gray-50); border-radius: 16px; padding: 24px; text-align: center;
-      border: 1px solid var(--gray-100); transition: all 0.3s;
+      border: 1px solid var(--gray-100); transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
     }
-    .tech-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+    .tech-card:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
     .tech-card .tech-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
     .tech-card .tech-version { font-size: 12px; color: var(--primary); font-weight: 600; }
     .tech-card .tech-desc { font-size: 12px; color: var(--gray-500); margin-top: 8px; }
@@ -320,9 +363,9 @@
     .step-card {
       background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 36px;
-      position: relative; transition: all 0.3s;
+      position: relative; transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
     }
-    .step-card:hover { background: rgba(255,255,255,0.1); }
+    .step-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
     .step-num {
       font-size: 60px; font-weight: 900; color: rgba(255,255,255,0.04);
       position: absolute; top: 12px; right: 20px; line-height: 1;
@@ -372,15 +415,44 @@
     .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.35); }
     .footer-bottom .powered { display: flex; align-items: center; gap: 6px; }
     .footer-bottom .powered span { color: rgba(255,255,255,0.55); font-weight: 500; }
+    .footer-stats {
+      display: flex; gap: 32px; margin-top: 20px; flex-wrap: wrap;
+    }
+    .footer-stat { text-align: center; }
+    .footer-stat .fs-val { font-size: 20px; font-weight: 800; color: white; }
+    .footer-stat .fs-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
 
     /* ===== ANIMATIONS ===== */
+    @keyframes floatSmooth {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    @keyframes badgeGlow {
+      0%, 100% { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.1); }
+      50% { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.2); }
+    }
+    @keyframes heroShapePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
     .animate-up { animation: slideUp 0.7s ease-out both; }
+    .animate-fade { animation: fadeIn 0.7s ease-out both; }
+    .animate-scale { animation: scaleIn 0.5s ease-out both; }
     .delay-1 { animation-delay: 0.1s; }
     .delay-2 { animation-delay: 0.2s; }
     .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    .delay-6 { animation-delay: 0.6s; }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
@@ -392,6 +464,7 @@
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
       .route-grid { grid-template-columns: 1fr; }
+      .coop-grid { grid-template-columns: 1fr; }
       .modules-grid { grid-template-columns: repeat(2, 1fr); }
       .tech-grid { grid-template-columns: repeat(2, 1fr); }
       .steps-grid { grid-template-columns: 1fr; }
@@ -406,6 +479,7 @@
       .footer-grid { grid-template-columns: 1fr; }
       .hero-buttons { flex-direction: column; align-items: center; }
       .cta-buttons { flex-direction: column; align-items: center; }
+      .footer-stats { justify-content: center; }
     }
   </style>
 </head>
@@ -426,8 +500,8 @@
       <div class="nav-links">
         <a href="#features">Tecnologia</a>
         <a href="#route">Ruta</a>
+        <a href="#cooperativa">Cooperativa</a>
         <a href="#dashboard">Dashboard</a>
-        <a href="#tech">Tech Stack</a>
         <a href="https://github.com/rodrigo17312016-jpg/transrosa-smart-transport" class="btn btn-primary" target="_blank">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           Ver en GitHub
@@ -443,14 +517,15 @@
       <div class="animate-up">
         <div class="hero-badge">
           <div class="dot"></div>
-          <span>Plataforma Inteligente de Transporte</span>
+          <span>Cooperativa Inteligente de Transporte</span>
         </div>
         <h1>
           Viaja <span class="highlight">Seguro</span><br>
           Viaja <span class="highlight">Inteligente</span>
         </h1>
         <p>
-          Conectamos <strong>Vegueta</strong> y <strong>Huacho</strong> con tecnologia de ultima generacion.
+          Somos una <strong>cooperativa de 50 socios</strong> que conecta <strong>Vegueta</strong> y <strong>Huacho</strong>
+          con 100 unidades y tecnologia de ultima generacion.
           GPS en tiempo real, boletos digitales con QR, prediccion de demanda con IA y mucho mas.
         </p>
         <div class="hero-buttons">
@@ -473,6 +548,10 @@
             <div class="trust-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
             <span>Cada 10 min</span>
           </div>
+          <div class="trust-item">
+            <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <span>50 Socios</span>
+          </div>
         </div>
       </div>
 
@@ -485,10 +564,13 @@
         <div class="hero-map">
           <div class="hero-map-header">
             <div class="live-dot"><span>En vivo ahora</span></div>
-            <span style="font-size:12px;color:rgba(255,255,255,0.35)">12 unidades activas</span>
+            <span style="font-size:12px;color:rgba(255,255,255,0.35)">100 unidades en flota</span>
           </div>
           <svg viewBox="0 0 400 140" width="100%">
-            <path d="M30,110 C80,110 100,60 150,55 S220,25 270,40 S340,65 370,30" stroke="#DC2626" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M30,110 C80,110 100,60 150,55 S220,25 270,40 S340,65 370,30" stroke="#DC2626" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="6,4">
+              <animate attributeName="stroke-dashoffset" values="0;-10" dur="0.8s" repeatCount="indefinite"/>
+            </path>
+            <path d="M30,110 C80,110 100,60 150,55 S220,25 270,40 S340,65 370,30" stroke="#DC2626" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.1"/>
             <circle cx="30" cy="110" r="6" fill="#DC2626"/><circle cx="30" cy="110" r="3" fill="white"/>
             <circle cx="150" cy="55" r="4" fill="#DC2626"/><circle cx="150" cy="55" r="2" fill="white"/>
             <circle cx="270" cy="40" r="4" fill="#DC2626"/><circle cx="270" cy="40" r="2" fill="white"/>
@@ -497,7 +579,12 @@
             <text x="150" y="75" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Inter">Bellavista</text>
             <text x="270" y="60" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Inter">Puente</text>
             <text x="370" y="50" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Inter">Huacho</text>
-            <circle r="5" fill="#F59E0B"><animateMotion path="M30,110 C80,110 100,60 150,55 S220,25 270,40 S340,65 370,30" dur="4s" repeatCount="indefinite"/></circle>
+            <g>
+              <animateMotion path="M30,110 C80,110 100,60 150,55 S220,25 270,40 S340,65 370,30" dur="4s" repeatCount="indefinite"/>
+              <circle r="8" fill="#F59E0B" opacity="0.2"><animate attributeName="r" values="8;14;8" dur="1.5s" repeatCount="indefinite"/></circle>
+              <rect x="-8" y="-3" width="16" height="6" rx="2" fill="#F59E0B"/>
+              <circle r="4" fill="#F59E0B"/>
+            </g>
           </svg>
         </div>
         <div class="hero-stats-row">
@@ -507,7 +594,7 @@
         </div>
         <div class="float-card bottom">
           <div class="float-icon" style="background:#FEE2E2"><svg width="20" height="20" viewBox="0 0 24 24" stroke="#DC2626" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-          <div><div class="fc-title">+1,200 pasajeros</div><div class="fc-sub">Transportados hoy</div></div>
+          <div><div class="fc-title">+1,500 pasajeros</div><div class="fc-sub">Transportados hoy</div></div>
         </div>
       </div>
     </div>
@@ -516,25 +603,25 @@
   <!-- STATS BAR -->
   <div class="stats-bar">
     <div class="stats-grid">
-      <div class="stat-card">
+      <div class="stat-card animate-up delay-1">
         <div class="stat-icon" style="background:#FEE2E2"><svg viewBox="0 0 24 24" stroke="#DC2626"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 6v6m7-6v6M2 12h20"/></svg></div>
-        <div class="stat-val">50+</div>
+        <div class="stat-val">100+</div>
         <div class="stat-label">Unidades</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card animate-up delay-2">
+        <div class="stat-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" stroke="#D97706"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="stat-val">50</div>
+        <div class="stat-label">Socios</div>
+      </div>
+      <div class="stat-card animate-up delay-3">
         <div class="stat-icon" style="background:#DBEAFE"><svg viewBox="0 0 24 24" stroke="#2563EB"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-        <div class="stat-val">1,200+</div>
+        <div class="stat-val">1,500+</div>
         <div class="stat-label">Pasajeros/dia</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card animate-up delay-4">
         <div class="stat-icon" style="background:#D1FAE5"><svg viewBox="0 0 24 24" stroke="#059669"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76a6 6 0 010 8.49M7.76 16.24A6 6 0 017.76 7.76"/></svg></div>
-        <div class="stat-val">180+</div>
+        <div class="stat-val">200+</div>
         <div class="stat-label">Viajes/dia</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" stroke="#D97706" fill="#D97706"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <div class="stat-val">4.8/5</div>
-        <div class="stat-label">Satisfaccion</div>
       </div>
     </div>
   </div>
@@ -548,41 +635,41 @@
         <p class="section-desc mx-auto">Implementamos las mismas tecnologias que usan las empresas de transporte europeas, adaptadas a la realidad peruana.</p>
       </div>
       <div class="features-grid">
-        <div class="feature-card">
+        <div class="feature-card animate-up delay-1">
           <div class="feature-icon" style="background:#DBEAFE"><svg viewBox="0 0 24 24" stroke="#2563EB"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
           <span class="feature-tag">Tracking</span>
           <h3>GPS en Tiempo Real</h3>
           <p>Rastrea tu minivan en vivo desde tu celular. Sabe exactamente cuando llega tu unidad al paradero.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card animate-up delay-2">
           <div class="feature-icon" style="background:#FEE2E2"><svg viewBox="0 0 24 24" stroke="#DC2626"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h.01M7 12h.01M12 7h.01M12 12h.01M17 7h.01M7 17h.01M12 17h.01M17 12h.01M17 17h.01"/></svg></div>
           <span class="feature-tag">Digital</span>
           <h3>Boletos Digitales QR</h3>
           <p>Compra tu boleto online y viaja con tu codigo QR. Sin colas, sin efectivo, sin complicaciones.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card animate-up delay-3">
           <div class="feature-icon" style="background:#F3E8FF"><svg viewBox="0 0 24 24" stroke="#9333EA"><path d="M12 2a8 8 0 018 8c0 6-8 12-8 12S4 16 4 10a8 8 0 018-8z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <span class="feature-tag">AI-Powered</span>
           <h3>IA Predictiva</h3>
           <p>Prediccion de demanda con inteligencia artificial para optimizar la frecuencia de salidas.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card animate-up delay-4">
           <div class="feature-icon" style="background:#D1FAE5"><svg viewBox="0 0 24 24" stroke="#059669"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
           <span class="feature-tag">Pagos</span>
           <h3>Pago Digital</h3>
           <p>Paga con Yape, Plin, tarjeta o transferencia. Multiples opciones de pago seguro.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" stroke="#D97706"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-          <span class="feature-tag">Analytics</span>
-          <h3>Dashboard Analytics</h3>
-          <p>Panel de control con metricas en tiempo real, reportes financieros y analisis de rendimiento.</p>
+        <div class="feature-card animate-up delay-5">
+          <div class="feature-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" stroke="#D97706"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <span class="feature-tag">Cooperativa</span>
+          <h3>Gestion de Socios</h3>
+          <p>Panel personalizado por socio con seguimiento de comisiones diarias (S/25), mensuales (S/600) y anuales.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card animate-up delay-6">
           <div class="feature-icon" style="background:#CFFAFE"><svg viewBox="0 0 24 24" stroke="#0891B2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <span class="feature-tag">Seguridad</span>
-          <h3>Seguridad Total</h3>
-          <p>SOAT vigente, revision tecnica al dia, conductores certificados y monitoreo 24/7.</p>
+          <span class="feature-tag">Compliance</span>
+          <h3>Cumplimiento Total</h3>
+          <p>Control de SOAT, revision tecnica, licencias y permisos. Alertas automaticas de vencimiento.</p>
         </div>
       </div>
     </div>
@@ -595,7 +682,7 @@
         <div>
           <div class="section-badge" style="background:#DBEAFE;color:#2563EB">&#128205; Nuestra Ruta</div>
           <h2 class="section-title">Ruta Interurbana<br><span style="color:var(--primary)">RI-06</span></h2>
-          <p class="section-desc">Conectamos Vegueta y Huacho por la Carretera Panamericana Norte, con paradas estrategicas para tu comodidad.</p>
+          <p class="section-desc">100 vehiculos operados por 50 socios conectan Vegueta y Huacho por la Carretera Panamericana Norte, con paradas estrategicas para tu comodidad.</p>
           <div style="margin-top:32px">
             <div class="route-info-item"><div class="ri-icon">&#128994;</div><div><div class="ri-label">Origen</div><div class="ri-value">Av. 200 Millas - Vegueta</div></div></div>
             <div class="route-info-item"><div class="ri-icon">&#128308;</div><div><div class="ri-label">Destino</div><div class="ri-value">Av. Luna Arrieta / Ca. Miguel Grau - Huacho</div></div></div>
@@ -603,6 +690,7 @@
             <div class="route-info-item"><div class="ri-icon">&#9201;</div><div><div class="ri-label">Duracion</div><div class="ri-value">~45 minutos por tramo</div></div></div>
             <div class="route-info-item"><div class="ri-icon">&#128260;</div><div><div class="ri-label">Frecuencia</div><div class="ri-value">Cada 10 minutos</div></div></div>
             <div class="route-info-item"><div class="ri-icon">&#128336;</div><div><div class="ri-label">Horario</div><div class="ri-value">5:00 AM - 9:00 PM</div></div></div>
+            <div class="route-info-item"><div class="ri-icon">&#128656;</div><div><div class="ri-label">Flota</div><div class="ri-value">100 vehiculos (50 socios x 2 unidades)</div></div></div>
           </div>
         </div>
         <div class="route-visual" style="position:relative">
@@ -633,6 +721,40 @@
     </div>
   </section>
 
+  <!-- COOPERATIVE MODEL -->
+  <section class="coop-section" id="cooperativa">
+    <div class="container">
+      <div class="text-center">
+        <div class="section-badge" style="background:#FEF3C7;color:#D97706">&#129309; Modelo Cooperativo</div>
+        <h2 class="section-title">Una cooperativa de<br><span style="background:linear-gradient(135deg,#DC2626,#F59E0B);-webkit-background-clip:text;-webkit-text-fill-color:transparent">50 socios propietarios</span></h2>
+        <p class="section-desc mx-auto">Cada socio es dueno de 2 vehiculos, formando una flota de 100 unidades. Gestion transparente, comisiones claras y cumplimiento total.</p>
+      </div>
+      <div class="coop-grid">
+        <div class="coop-card animate-up delay-1">
+          <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#D97706;border-radius:20px 20px 0 0"></div>
+          <div class="coop-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" stroke="#D97706"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <h3>50 Socios Propietarios</h3>
+          <p>Cada socio posee 2 vehiculos y puede conducir personalmente o contratar conductores calificados para sus unidades.</p>
+          <div class="coop-highlight" style="background:#FEF3C7;color:#D97706">50 socios x 2 vehiculos = 100 unidades</div>
+        </div>
+        <div class="coop-card animate-up delay-2">
+          <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#059669;border-radius:20px 20px 0 0"></div>
+          <div class="coop-icon" style="background:#D1FAE5"><svg viewBox="0 0 24 24" stroke="#059669"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+          <h3>Comisiones Transparentes</h3>
+          <p>Sistema digital de cobro de comisiones: S/25 diario, S/600 mensual o S/6,500 anual por vehiculo. Todo registrado en el dashboard.</p>
+          <div class="coop-highlight" style="background:#D1FAE5;color:#059669">S/25 / S/600 / S/6,500 por vehiculo</div>
+        </div>
+        <div class="coop-card animate-up delay-3">
+          <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#DC2626;border-radius:20px 20px 0 0"></div>
+          <div class="coop-icon" style="background:#FEE2E2"><svg viewBox="0 0 24 24" stroke="#DC2626"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Cumplimiento Total</h3>
+          <p>La empresa garantiza que el 100% de vehiculos y conductores cumplen con SOAT, revision tecnica, licencias y permisos vigentes.</p>
+          <div class="coop-highlight" style="background:#FEE2E2;color:#DC2626">Documentacion 100% al dia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- STEPS -->
   <section class="steps-section">
     <div class="container">
@@ -641,19 +763,19 @@
         <h2 class="section-title" style="color:white">Tu viaje en <span style="color:var(--accent)">3 pasos</span></h2>
       </div>
       <div class="steps-grid">
-        <div class="step-card">
+        <div class="step-card animate-up delay-1">
           <div class="step-num">01</div>
           <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
           <h3>Abre TransRosa</h3>
           <p>Ingresa a la plataforma desde tu celular o computadora. Sin descargas necesarias.</p>
         </div>
-        <div class="step-card">
+        <div class="step-card animate-up delay-2">
           <div class="step-num">02</div>
           <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h.01M7 12h.01M12 7h.01M12 12h.01M17 7h.01M7 17h.01M12 17h.01M17 12h.01M17 17h.01"/></svg></div>
           <h3>Compra tu Boleto</h3>
           <p>Selecciona tu horario, paga con Yape/Plin y recibe tu QR al instante.</p>
         </div>
-        <div class="step-card">
+        <div class="step-card animate-up delay-3">
           <div class="step-num">03</div>
           <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 6v6m7-6v6M2 12h20"/></svg></div>
           <h3>Viaja Tranquilo</h3>
@@ -669,16 +791,16 @@
       <div class="text-center">
         <div class="section-badge" style="background:#F3E8FF;color:#9333EA">&#128065; Panel de Control</div>
         <h2 class="section-title">Gestion <span style="background:linear-gradient(135deg,#DC2626,#F59E0B);-webkit-background-clip:text;-webkit-text-fill-color:transparent">360&deg;</span> de la Flota</h2>
-        <p class="section-desc mx-auto">Dashboard empresarial con control total de operaciones, finanzas y rendimiento.</p>
+        <p class="section-desc mx-auto">Dashboard empresarial con control total de operaciones, socios, finanzas y rendimiento.</p>
       </div>
       <div class="modules-grid">
-        <div class="module-card"><div class="module-icon" style="background:#FEE2E2"><svg viewBox="0 0 24 24" stroke="#DC2626"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 6v6m7-6v6M2 12h20"/></svg></div><h3>Gestion de Flota</h3><p>50 unidades monitoreadas</p></div>
-        <div class="module-card"><div class="module-icon" style="background:#DBEAFE"><svg viewBox="0 0 24 24" stroke="#2563EB"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><h3>Conductores</h3><p>60+ conductores activos</p></div>
+        <div class="module-card"><div class="module-icon" style="background:#FEE2E2"><svg viewBox="0 0 24 24" stroke="#DC2626"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 6v6m7-6v6M2 12h20"/></svg></div><h3>Gestion de Flota</h3><p>100 unidades monitoreadas</p></div>
+        <div class="module-card"><div class="module-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" stroke="#D97706"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><h3>Socios</h3><p>50 socios, 2 vehiculos c/u</p></div>
+        <div class="module-card"><div class="module-icon" style="background:#DBEAFE"><svg viewBox="0 0 24 24" stroke="#2563EB"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><h3>Conductores</h3><p>100+ conductores activos</p></div>
         <div class="module-card"><div class="module-icon" style="background:#D1FAE5"><svg viewBox="0 0 24 24" stroke="#059669"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div><h3>GPS en Vivo</h3><p>Tracking en tiempo real</p></div>
         <div class="module-card"><div class="module-icon" style="background:#F3E8FF"><svg viewBox="0 0 24 24" stroke="#9333EA"><path d="M12 2a8 8 0 018 8c0 6-8 12-8 12S4 16 4 10a8 8 0 018-8z"/><circle cx="12" cy="10" r="3"/></svg></div><h3>Analytics IA</h3><p>Prediccion y optimizacion</p></div>
-        <div class="module-card"><div class="module-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" stroke="#D97706"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><h3>Finanzas</h3><p>Ingresos y gastos al dia</p></div>
-        <div class="module-card"><div class="module-icon" style="background:#CFFAFE"><svg viewBox="0 0 24 24" stroke="#0891B2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><h3>Mantenimiento</h3><p>Programacion inteligente</p></div>
-        <div class="module-card"><div class="module-icon" style="background:#FFE4E6"><svg viewBox="0 0 24 24" stroke="#E11D48"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h.01M7 12h.01M12 7h.01"/></svg></div><h3>Boletos QR</h3><p>Sistema de venta digital</p></div>
+        <div class="module-card"><div class="module-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" stroke="#D97706"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><h3>Comisiones</h3><p>Cobro diario/mensual/anual</p></div>
+        <div class="module-card"><div class="module-icon" style="background:#CFFAFE"><svg viewBox="0 0 24 24" stroke="#0891B2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Compliance</h3><p>Documentacion al 100%</p></div>
         <div class="module-card"><div class="module-icon" style="background:#E0E7FF"><svg viewBox="0 0 24 24" stroke="#4F46E5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><h3>Reportes</h3><p>KPIs y metricas clave</p></div>
       </div>
     </div>
@@ -709,7 +831,7 @@
   <section class="cta-section">
     <div class="container" style="position:relative;z-index:1">
       <h2 class="section-title" style="color:white">Listo para ver el<br><span class="accent">codigo fuente?</span></h2>
-      <p class="section-desc mx-auto" style="color:rgba(255,255,255,0.5)">Explora la arquitectura completa del proyecto, desde el frontend con Next.js 15 hasta la base de datos PostgreSQL con PostGIS.</p>
+      <p class="section-desc mx-auto" style="color:rgba(255,255,255,0.5)">Explora la arquitectura completa del proyecto, desde el frontend con Next.js 15 hasta la base de datos PostgreSQL con PostGIS. 50 socios, 100 vehiculos, una plataforma.</p>
       <div class="cta-buttons">
         <a href="https://github.com/rodrigo17312016-jpg/transrosa-smart-transport" class="btn btn-white" target="_blank">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="#DC2626"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -729,24 +851,30 @@
             <div class="logo-icon"><svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:white"><path d="M8 6v6m7-6v6M2 12h20M5 18h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></div>
             <div><div class="logo-text" style="color:white">Trans<span style="color:#f87171">Rosa</span></div><div class="logo-sub">SMART TRANSPORT</div></div>
           </div>
-          <p>Empresa de Transportes Santa Rosa de Vegueta S.A. Conectando Vegueta y Huacho con seguridad, puntualidad y tecnologia.</p>
+          <p>Cooperativa de Transportes Santa Rosa de Vegueta S.A. 50 socios, 100 vehiculos conectando Vegueta y Huacho con seguridad, puntualidad y tecnologia.</p>
+          <div class="footer-stats">
+            <div class="footer-stat"><div class="fs-val">100+</div><div class="fs-label">Vehiculos</div></div>
+            <div class="footer-stat"><div class="fs-val">50</div><div class="fs-label">Socios</div></div>
+            <div class="footer-stat"><div class="fs-val">1,500+</div><div class="fs-label">Pasajeros/dia</div></div>
+            <div class="footer-stat"><div class="fs-val">43.15</div><div class="fs-label">km Ruta</div></div>
+          </div>
         </div>
         <div class="footer-col">
           <h4>Proyecto</h4>
           <ul>
             <li><a href="#features">Tecnologia</a></li>
             <li><a href="#route">Ruta RI-06</a></li>
+            <li><a href="#cooperativa">Cooperativa</a></li>
             <li><a href="#dashboard">Dashboard</a></li>
-            <li><a href="#tech">Tech Stack</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Modulos</h4>
           <ul>
             <li><a href="#">Gestion de Flota</a></li>
+            <li><a href="#">Gestion de Socios</a></li>
             <li><a href="#">GPS en Vivo</a></li>
             <li><a href="#">Boletos QR</a></li>
-            <li><a href="#">Analytics IA</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -760,7 +888,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Empresa de Transportes Santa Rosa de Vegueta S.A.</p>
+        <p>&copy; 2026 Cooperativa de Transportes Santa Rosa de Vegueta S.A. | 50 Socios, 100 Vehiculos</p>
         <div class="powered">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           <span>Powered by TransRosa Smart Platform</span>
