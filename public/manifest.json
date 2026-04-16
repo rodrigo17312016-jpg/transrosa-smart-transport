@@ -1,0 +1,45 @@
+{
+  "name": "TransRosa - Smart Transport",
+  "short_name": "TransRosa",
+  "description": "Plataforma inteligente de transporte público - Vegueta ↔ Huacho",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#DC2626",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "es",
+  "categories": ["transportation", "travel"],
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Comprar Boleto",
+      "url": "/boletos",
+      "description": "Compra tu boleto digital con QR"
+    },
+    {
+      "name": "Ver Ruta en Vivo",
+      "url": "/rutas",
+      "description": "Rastrea las unidades en tiempo real"
+    },
+    {
+      "name": "Horarios",
+      "url": "/horarios",
+      "description": "Consulta horarios de salida"
+    }
+  ]
+}
