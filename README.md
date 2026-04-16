@@ -255,21 +255,33 @@ npm run dev
 
 ## Despliegue
 
-### Vercel (Recomendado)
+### GitHub Pages (Configurado)
 
-```bash
-# Instalar Vercel CLI
-npm i -g vercel
+El proyecto ya está configurado para despliegue automático en GitHub Pages.
 
-# Desplegar
-vercel
+**¿Cómo funciona?**
+1. Haces `git push` a la rama `main`
+2. GitHub Actions ejecuta el workflow `.github/workflows/deploy.yml`
+3. Se hace `npm run build` (genera HTML estático en `/out`)
+4. Se despliega automáticamente a GitHub Pages
+
+**URL de producción:**
+```
+https://rodrigo17312016-jpg.github.io/transrosa-smart-transport/
 ```
 
-### Variables de entorno en producción
-Configurar en el dashboard de Vercel:
+**Configuración clave en `next.config.ts`:**
+```ts
+output: 'export'           // HTML estático (sin servidor Node)
+basePath: '/transrosa-smart-transport'  // Ruta base en GitHub Pages
+trailingSlash: true         // Requerido para GitHub Pages
+images: { unoptimized: true }  // GH Pages no soporta optimización
+```
+
+**Variables de entorno (opcionales):**
+Configurar en GitHub → Settings → Secrets → Actions:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
 
 ---
 
