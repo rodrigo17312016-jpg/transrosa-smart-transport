@@ -124,7 +124,7 @@
 
   .stat-card {
     @apply relative overflow-hidden bg-white rounded-2xl p-6 border border-gray-100
-           shadow-sm hover:shadow-lg transition-all duration-300 group;
+           shadow-sm hover:shadow-lg transition-all duration-300;
   }
 
   .sidebar-link {
@@ -194,16 +194,19 @@
 
 /* Leaflet map overrides */
 .leaflet-container {
-  @apply rounded-2xl z-0;
+  border-radius: 1rem;
+  z-index: 0;
   font-family: var(--font-sans) !important;
 }
 
 .leaflet-popup-content-wrapper {
-  @apply rounded-xl shadow-xl border-0 !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1) !important;
+  border: 0 !important;
 }
 
 .leaflet-control-zoom a {
-  @apply rounded-lg !important;
+  border-radius: 0.5rem !important;
 }
 
 /* Custom scrollbar */
@@ -213,15 +216,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded-full;
+  background: #D1D5DB;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
+  background: #9CA3AF;
 }
 
 /* Print styles */
