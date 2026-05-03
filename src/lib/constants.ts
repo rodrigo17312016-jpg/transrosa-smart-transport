@@ -146,8 +146,107 @@ export const DASHBOARD_NAV = [
   { label: 'GPS en Vivo', href: '/dashboard/gps', icon: 'MapPin' },
   { label: 'Viajes', href: '/dashboard/viajes', icon: 'Route' },
   { label: 'Boletos', href: '/dashboard/boletos', icon: 'Ticket' },
+  { label: 'Seguridad', href: '/dashboard/seguridad', icon: 'ShieldCheck' },
   { label: 'Mantenimiento', href: '/dashboard/mantenimiento', icon: 'Wrench' },
   { label: 'Finanzas', href: '/dashboard/finanzas', icon: 'DollarSign' },
   { label: 'Analytics IA', href: '/dashboard/analytics', icon: 'Brain' },
   { label: 'Configuración', href: '/dashboard/configuracion', icon: 'Settings' },
 ] as const
+
+// ============================================================
+// SECURITY MODULE CONFIG
+// ============================================================
+
+export const SECURITY_FEATURES = [
+  {
+    id: 'facial_recognition',
+    name: 'Reconocimiento Facial',
+    description: 'IA identifica pasajeros al ingresar al terminal',
+    icon: 'ScanFace',
+    enabled: true,
+  },
+  {
+    id: 'dni_scan',
+    name: 'Lectura de DNI',
+    description: 'OCR + verificación documentaria automática',
+    icon: 'IdCard',
+    enabled: true,
+  },
+  {
+    id: 'manifest_realtime',
+    name: 'Manifiesto en Tiempo Real',
+    description: 'Lista digital de pasajeros por vehículo',
+    icon: 'ClipboardList',
+    enabled: true,
+  },
+  {
+    id: 'cctv_ai',
+    name: 'CCTV con IA Comportamental',
+    description: 'Detección de actitudes sospechosas',
+    icon: 'Camera',
+    enabled: true,
+  },
+  {
+    id: 'panic_button',
+    name: 'Botón de Pánico → PNP',
+    description: 'Conexión directa a Policía Nacional',
+    icon: 'AlertTriangle',
+    enabled: true,
+  },
+  {
+    id: 'cam_360',
+    name: 'Cámaras 360° en Vehículo',
+    description: 'Grabación interior con cloud upload',
+    icon: 'Video',
+    enabled: true,
+  },
+  {
+    id: 'sos_app',
+    name: 'SOS App Pasajero',
+    description: 'Botón de emergencia discreto',
+    icon: 'PhoneCall',
+    enabled: true,
+  },
+  {
+    id: 'biometric_driver',
+    name: 'Biometría del Conductor',
+    description: 'Selfie pre-turno obligatoria',
+    icon: 'Fingerprint',
+    enabled: true,
+  },
+  {
+    id: 'lpr_terminal',
+    name: 'LPR en Terminales',
+    description: 'Lectura de placas en accesos',
+    icon: 'ScanLine',
+    enabled: false, // Phase 2
+  },
+  {
+    id: 'blockchain_records',
+    name: 'Blockchain Registros',
+    description: 'Trazabilidad criminalística',
+    icon: 'Lock',
+    enabled: false, // Phase 2
+  },
+] as const
+
+export const INCIDENT_TYPES = {
+  theft: { label: 'Robo / Hurto', icon: 'Wallet', color: 'red' },
+  assault: { label: 'Agresión', icon: 'AlertTriangle', color: 'red' },
+  harassment: { label: 'Acoso', icon: 'UserX', color: 'orange' },
+  medical_emergency: { label: 'Emergencia Médica', icon: 'Activity', color: 'red' },
+  vehicle_breakdown: { label: 'Avería Vehicular', icon: 'Wrench', color: 'amber' },
+  accident: { label: 'Accidente', icon: 'AlertOctagon', color: 'red' },
+  suspicious_behavior: { label: 'Conducta Sospechosa', icon: 'Eye', color: 'amber' },
+  lost_item: { label: 'Objeto Perdido', icon: 'Search', color: 'blue' },
+  other: { label: 'Otro', icon: 'AlertCircle', color: 'gray' },
+} as const
+
+export const SECURITY_RESPONSE_PROTOCOL = {
+  policeContact: '105',
+  emergencyMedical: '116',
+  fireDept: '116',
+  serenazgoHuacho: '+51 1 232-1818',
+  serenazgoHuaura: '+51 1 232-1819',
+  internalSecurityChief: '+51 993 370 254',
+} as const

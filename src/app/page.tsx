@@ -6,7 +6,8 @@ import {
   Bus, MapPin, Clock, Users, Shield, Smartphone, Zap, Star,
   ChevronRight, ArrowRight, Navigation, Wifi, CreditCard,
   BarChart3, Route, Phone, CheckCircle2, Play, Sparkles,
-  Globe, Brain, QrCode, Bell, TrendingUp, Eye
+  Globe, Brain, QrCode, Bell, TrendingUp, Eye,
+  ShieldCheck, ScanFace, IdCard, ClipboardList, Camera, Video, AlertTriangle
 } from 'lucide-react'
 import Navbar from '@/components/shared/Navbar'
 import Footer from '@/components/shared/Footer'
@@ -458,6 +459,13 @@ export default function HomePage() {
                 tag: 'Web',
                 color: 'teal',
               },
+              {
+                icon: ShieldCheck,
+                title: 'Identificacion de Pasajeros',
+                description: 'Reconocimiento facial, escaneo de DNI y manifiesto digital para investigar incidentes y prevenir robos.',
+                tag: 'Seguridad+',
+                color: 'red',
+              },
             ].map(({ icon: Icon, title, description, tag, color }, index) => (
               <div
                 key={title}
@@ -476,6 +484,7 @@ export default function HomePage() {
                       color === 'rose' ? '#ffe4e6' :
                       color === 'cyan' ? '#cffafe' :
                       color === 'indigo' ? '#e0e7ff' :
+                      color === 'red' ? '#fee2e2' :
                       '#ccfbf1'
                   }}>
                     <Icon className="w-7 h-7" style={{
@@ -487,6 +496,7 @@ export default function HomePage() {
                         color === 'rose' ? '#e11d48' :
                         color === 'cyan' ? '#0891b2' :
                         color === 'indigo' ? '#4f46e5' :
+                        color === 'red' ? '#dc2626' :
                         '#0d9488'
                     }} />
                   </div>
@@ -672,6 +682,95 @@ export default function HomePage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== SECURITY SECTION ==================== */}
+      <section className="py-24 bg-gray-50 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, #DC2626 1px, transparent 0)',
+          backgroundSize: '32px 32px',
+        }} />
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 rounded-full mb-6">
+                <ShieldCheck className="w-4 h-4 text-red-600" />
+                <span className="text-sm font-semibold text-red-700">Seguridad Total</span>
+              </div>
+              <h2 className="text-3xl lg:text-5xl font-black text-gray-900 font-[family-name:var(--font-poppins)] leading-tight">
+                Sabemos quien <br/>
+                <span className="text-red-600">sube a tu unidad</span>
+              </h2>
+              <p className="mt-4 text-lg text-gray-500">
+                Implementamos los mismos sistemas de seguridad que usan las empresas de transporte de primer mundo. Reconocimiento facial, manifiesto digital, CCTV con IA y conexion directa con la PNP.
+              </p>
+              <div className="mt-8 grid grid-cols-2 gap-4">
+                {[
+                  { icon: 'ScanFace', label: 'Reconocimiento Facial', desc: 'IA identifica al ingresar' },
+                  { icon: 'IdCard', label: 'Lectura de DNI', desc: 'Verificacion documentaria' },
+                  { icon: 'ClipboardList', label: 'Manifiesto Digital', desc: 'Lista en tiempo real' },
+                  { icon: 'Camera', label: 'CCTV con IA', desc: 'Deteccion comportamental' },
+                  { icon: 'AlertTriangle', label: 'Boton SOS -> PNP', desc: 'Alerta directa policia' },
+                  { icon: 'Video', label: 'Camaras 360', desc: 'Grabacion interior' },
+                ].map((item) => {
+                  const Icon = ({
+                    ScanFace, IdCard, ClipboardList, Camera, AlertTriangle, Video
+                  } as any)[item.icon]
+                  return (
+                    <div key={item.label} className="flex items-start gap-3 p-3 bg-white rounded-xl border border-gray-100">
+                      <div className="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center shrink-0">
+                        {Icon && <Icon className="w-4 h-4 text-red-600" />}
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-gray-900">{item.label}</p>
+                        <p className="text-xs text-gray-500">{item.desc}</p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+            <div className="relative">
+              <div className="bg-gradient-to-br from-secondary-900 via-secondary-800 to-red-900 rounded-3xl p-8 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/20 rounded-full blur-3xl" />
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-sm font-medium">Centro de Seguridad - En Vivo</span>
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      { label: 'Check-ins Hoy', value: '248', trend: '+18%' },
+                      { label: 'Pasajeros a Bordo', value: '42', trend: 'En vivo' },
+                      { label: 'Reconocimiento Facial', value: '78.5%', trend: 'Activo' },
+                      { label: 'Camaras Online', value: '25/27', trend: 'OK' },
+                      { label: 'Tiempo de Respuesta', value: '4.2 min', trend: '+8%' },
+                    ].map((stat) => (
+                      <div key={stat.label} className="flex items-center justify-between p-3 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10">
+                        <span className="text-sm text-white/60">{stat.label}</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-lg font-bold">{stat.value}</span>
+                          <span className="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-300 rounded-full">{stat.trend}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-6 pt-6 border-t border-white/10">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-red-500 flex items-center justify-center">
+                        <Phone className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold">PNP - 105</p>
+                        <p className="text-xs text-white/50">Conexion directa de emergencia</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

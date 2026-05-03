@@ -355,3 +355,162 @@ export interface UserProfile {
   is_active: boolean
   created_at: string
 }
+
+// ============================================================
+// SECURITY MODULE - Passenger ID & Incident Tracking
+// ============================================================
+
+// --- Passenger Check-In ---
+export type CheckInMethod = 'facial_recognition' | 'qr_code' | 'dni_scan' | 'manual'
+export type CheckInStatus = 'checked_in' | 'boarded' | 'completed' | 'no_show'
+
+export interface PassengerCheckIn {
+  id: string
+  trip_id: string
+  vehicle_id: string
+  ticket_id: string | null
+  // Identity
+  passenger_name: string
+  passenger_dni: string
+  passenger_phone: string | null
+  passenger_photo_url: string | null
+  // Check-in details
+  method: CheckInMethod
+  terminal_id: string
+  terminal_name: string // 'Vegueta' or 'Huacho'
+  check_in_time: string
+  boarding_time: string | null
+  // Position
+  seat_number: number | null
+  // Verification
+  identity_verified: boolean
+  match_confidence: number | null // 0-1 from facial recognition
+  // Camera
+  camera_id: string | null
+  camera_snapshot_url: string | null
+  status: CheckInStatus
+  notes: string | null
+  created_at: string
+}
+
+// --- Vehicle Manifest ---
+export interface VehicleManifest {
+  id: string
+  trip_id: string
+  vehicle_id: string
+  vehicle_plate: string
+  driver_id: string
+  driver_name: string
+  departure_time: string
+  arrival_time: string | null
+  total_passengers: number
+  total_capacity: number
+  passengers: PassengerCheckIn[]
+  status: 'boarding' | 'in_transit' | 'completed' | 'incident'
+  origin_terminal: string
+  destination_terminal: string
+  created_at: string
+}
+
+// --- Security Incident ---
+export type IncidentType = 'theft' | 'assault' | 'harassment' | 'medical_emergency' | 'vehicle_breakdown' | 'accident' | 'suspicious_behavior' | 'lost_item' | 'other'
+export type IncidentSeverity = 'low' | 'medium' | 'high' | 'critical'
+export type IncidentStatus = 'reported' | 'investigating' | 'police_notified' | 'resolved' | 'closed'
+
+export interface SecurityIncident {
+  id: string
+  incident_number: string // INC-2026-001
+  // What
+  type: IncidentType
+  severity: IncidentSeverity
+  status: IncidentStatus
+  title: string
+  description: string
+  // When & Where
+  incident_date: string
+  reported_date: string
+  location: string // 'Vehículo #12', 'Terminal Vegueta'
+  vehicle_id: string | null
+  trip_id: string | null
+  terminal_id: string | null
+  // Who
+  reported_by: string // user id or name
+  reporter_role: 'driver' | 'passenger' | 'admin' | 'police' | 'partner'
+  affected_passengers: string[] // check-in ids
+  suspect_description: string | null
+  suspect_photo_url: string | null
+  // Evidence
+  cctv_video_urls: string[]
+  photo_evidence_urls: string[]
+  witness_statements: string[]
+  // Police
+  police_notified: boolean
+  police_report_number: string | null
+  police_officer: string | null
+  // Resolution
+  resolution_notes: string | null
+  resolved_date: string | null
+  insurance_claim_number: string | null
+  estimated_loss: number | null
+  // Metadata
+  created_at: string
+  updated_at: string
+}
+
+// --- CCTV Camera ---
+export type CameraStatus = 'online' | 'offline' | 'maintenance' | 'recording'
+export type CameraLocation = 'terminal_entry' | 'terminal_boarding' | 'vehicle_interior' | 'vehicle_front' | 'parking_lot'
+
+export interface CCTVCamera {
+  id: string
+  camera_code: string // CAM-T01-A1
+  name: string
+  location: CameraLocation
+  terminal_id: string | null
+  vehicle_id: string | null
+  // Tech specs
+  has_facial_recognition: boolean
+  has_motion_detection: boolean
+  has_night_vision: boolean
+  resolution: string // '1080p', '4K'
+  storage_days: number
+  // Status
+  status: CameraStatus
+  last_ping: string
+  last_recording_url: string | null
+  // Position
+  installed_date: string
+  ip_address: string | null
+  notes: string | null
+}
+
+// --- Security KPIs ---
+export interface SecurityStats {
+  total_check_ins_today: number
+  total_passengers_active: number // Currently on board
+  facial_recognition_rate: number // % checked in with face recognition
+  active_incidents: number
+  resolved_incidents_month: number
+  cameras_online: number
+  cameras_total: number
+  avg_response_time_minutes: number
+  identity_verification_rate: number // %
+  sos_alerts_today: number
+}
+
+// --- SOS Alert ---
+export interface SOSAlert {
+  id: string
+  triggered_by: 'driver' | 'passenger' | 'auto'
+  user_id: string | null
+  vehicle_id: string
+  trip_id: string | null
+  lat: number
+  lng: number
+  triggered_at: string
+  responded_at: string | null
+  resolved_at: string | null
+  status: 'active' | 'responded' | 'resolved' | 'false_alarm'
+  description: string | null
+  responder: string | null
+}

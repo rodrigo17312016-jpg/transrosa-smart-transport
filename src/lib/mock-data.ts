@@ -6,7 +6,8 @@
 import type {
   Vehicle, Driver, Trip, Ticket, MaintenanceRecord,
   DashboardStats, GPSPosition, DailyRevenue, Alert,
-  Partner, Commission, ComplianceRecord
+  Partner, Commission, ComplianceRecord,
+  PassengerCheckIn, VehicleManifest, SecurityIncident, CCTVCamera, SOSAlert, SecurityStats
 } from '@/types'
 
 // --- Partners (50 socios) ---
@@ -361,3 +362,240 @@ export const mockMaintenanceRecords: MaintenanceRecord[] = Array.from({ length: 
   notes: null,
   created_at: '2026-04-01T00:00:00Z',
 }))
+
+// ============================================================
+// SECURITY MODULE MOCK DATA
+// ============================================================
+
+const passengerNames = [
+  'María García López', 'Juan Pérez Ramírez', 'Ana Torres Flores', 'Carlos Ruiz Mendoza',
+  'Lucía Vega Castillo', 'Pedro Sánchez Cruz', 'Carmen Díaz Hernández', 'Miguel Reyes Quispe',
+  'Rosa Morales Vargas', 'Luis Castro Paredes', 'Patricia Soto Aguilar', 'Roberto Ponce Ibarra',
+  'Elena Vera Contreras', 'Daniel Salazar Medina', 'Sandra Bautista Romero', 'Hugo Carrillo León',
+  'Diana Meza Villanueva', 'Jorge Espinoza Córdova', 'Silvia Peña Campos', 'Alberto Ortiz Delgado',
+]
+
+// --- Passenger Check-Ins (50 today) ---
+export const mockCheckIns: PassengerCheckIn[] = Array.from({ length: 50 }, (_, i) => {
+  const methods: PassengerCheckIn['method'][] = ['facial_recognition', 'qr_code', 'dni_scan', 'manual']
+  const statuses: PassengerCheckIn['status'][] = ['checked_in', 'boarded', 'completed', 'no_show']
+  const method = methods[i % 4]
+  const isVerified = method !== 'manual'
+  const now = new Date()
+  const checkInTime = new Date(now.getTime() - (50 - i) * 8 * 60000)
+
+  return {
+    id: `ci-${i + 1}`,
+    trip_id: `t-${(i % 20) + 1}`,
+    vehicle_id: `v-${(i % 100) + 1}`,
+    ticket_id: i % 4 !== 3 ? `tk-${i + 1}` : null,
+    passenger_name: passengerNames[i % passengerNames.length],
+    passenger_dni: `${40000000 + i * 134578}`.slice(0, 8),
+    passenger_phone: i % 3 === 0 ? `+51 9${String(50000000 + i * 333333).slice(-8)}` : null,
+    passenger_photo_url: null,
+    method,
+    terminal_id: i % 2 === 0 ? 'term-vegueta' : 'term-huacho',
+    terminal_name: i % 2 === 0 ? 'Vegueta' : 'Huacho',
+    check_in_time: checkInTime.toISOString(),
+    boarding_time: i < 30 ? new Date(checkInTime.getTime() + 3 * 60000).toISOString() : null,
+    seat_number: i % 4 === 3 ? null : ((i % 10) + 1),
+    identity_verified: isVerified,
+    match_confidence: method === 'facial_recognition' ? 0.92 + (i % 8) * 0.01 : null,
+    camera_id: method === 'facial_recognition' ? `CAM-T${i % 2 === 0 ? '01' : '02'}-A${(i % 4) + 1}` : null,
+    camera_snapshot_url: method === 'facial_recognition' ? `https://placeholder.cdn/snap-${i + 1}.jpg` : null,
+    status: i < 10 ? 'completed' : i < 30 ? 'boarded' : i < 47 ? 'checked_in' : 'no_show',
+    notes: null,
+    created_at: checkInTime.toISOString(),
+  }
+})
+
+// --- Vehicle Manifests (8 active) ---
+export const mockManifests: VehicleManifest[] = Array.from({ length: 8 }, (_, i) => {
+  const passengers = mockCheckIns.filter((_, idx) => idx % 8 === i).slice(0, 5 + (i % 5))
+  return {
+    id: `mn-${i + 1}`,
+    trip_id: `t-${i + 1}`,
+    vehicle_id: `v-${i + 1}`,
+    vehicle_plate: mockVehicles[i].plate_number,
+    driver_id: `d-${i + 1}`,
+    driver_name: `${mockDrivers[i].first_name} ${mockDrivers[i].last_name}`,
+    departure_time: new Date(Date.now() - i * 12 * 60000).toISOString(),
+    arrival_time: i < 3 ? new Date(Date.now() - (i - 3) * 12 * 60000 + 45 * 60000).toISOString() : null,
+    total_passengers: passengers.length,
+    total_capacity: 10,
+    passengers,
+    status: i < 3 ? 'completed' : i < 6 ? 'in_transit' : 'boarding',
+    origin_terminal: i % 2 === 0 ? 'Vegueta' : 'Huacho',
+    destination_terminal: i % 2 === 0 ? 'Huacho' : 'Vegueta',
+    created_at: new Date().toISOString(),
+  }
+})
+
+// --- Security Incidents (12 records, mix of statuses) ---
+export const mockIncidents: SecurityIncident[] = [
+  {
+    id: 'inc-1', incident_number: 'INC-2026-001',
+    type: 'theft', severity: 'high', status: 'investigating',
+    title: 'Hurto de celular reportado', description: 'Pasajera reporta hurto de celular Samsung A54 durante el trayecto. Posible sospechoso identificado en CCTV.',
+    incident_date: new Date(Date.now() - 2 * 3600000).toISOString(),
+    reported_date: new Date(Date.now() - 1.5 * 3600000).toISOString(),
+    location: 'Vehículo #12 - Trayecto Vegueta a Huacho',
+    vehicle_id: 'v-12', trip_id: 't-3', terminal_id: null,
+    reported_by: 'María García', reporter_role: 'passenger',
+    affected_passengers: ['ci-3'], suspect_description: 'Hombre, 25-30 años, polo rojo, gorra negra',
+    suspect_photo_url: 'https://placeholder.cdn/suspect-1.jpg',
+    cctv_video_urls: ['https://placeholder.cdn/cctv-inc1.mp4'],
+    photo_evidence_urls: [], witness_statements: ['Testigo: Carlos Ruiz - asiento 4'],
+    police_notified: true, police_report_number: 'PNP-HUA-2026-0089', police_officer: 'Sof. Ramírez',
+    resolution_notes: null, resolved_date: null, insurance_claim_number: null, estimated_loss: 1800,
+    created_at: new Date(Date.now() - 1.5 * 3600000).toISOString(),
+    updated_at: new Date(Date.now() - 30 * 60000).toISOString(),
+  },
+  {
+    id: 'inc-2', incident_number: 'INC-2026-002',
+    type: 'lost_item', severity: 'low', status: 'resolved',
+    title: 'Cartera olvidada', description: 'Pasajero olvida cartera con documentos. Recuperada por conductor.',
+    incident_date: new Date(Date.now() - 24 * 3600000).toISOString(),
+    reported_date: new Date(Date.now() - 23 * 3600000).toISOString(),
+    location: 'Terminal Huacho', vehicle_id: 'v-23', trip_id: null, terminal_id: 'term-huacho',
+    reported_by: 'Juan Pérez', reporter_role: 'passenger', affected_passengers: [],
+    suspect_description: null, suspect_photo_url: null, cctv_video_urls: [], photo_evidence_urls: [],
+    witness_statements: [], police_notified: false, police_report_number: null, police_officer: null,
+    resolution_notes: 'Cartera entregada al pasajero en oficina central',
+    resolved_date: new Date(Date.now() - 12 * 3600000).toISOString(),
+    insurance_claim_number: null, estimated_loss: null,
+    created_at: new Date(Date.now() - 23 * 3600000).toISOString(),
+    updated_at: new Date(Date.now() - 12 * 3600000).toISOString(),
+  },
+  {
+    id: 'inc-3', incident_number: 'INC-2026-003',
+    type: 'medical_emergency', severity: 'critical', status: 'resolved',
+    title: 'Emergencia médica - desmayo', description: 'Pasajera adulta mayor sufre desmayo. Atendida por SAMU.',
+    incident_date: new Date(Date.now() - 5 * 24 * 3600000).toISOString(),
+    reported_date: new Date(Date.now() - 5 * 24 * 3600000).toISOString(),
+    location: 'Vehículo #7', vehicle_id: 'v-7', trip_id: 't-15', terminal_id: null,
+    reported_by: 'Conductor Carlos García', reporter_role: 'driver', affected_passengers: ['ci-7'],
+    suspect_description: null, suspect_photo_url: null, cctv_video_urls: [], photo_evidence_urls: [],
+    witness_statements: [], police_notified: false, police_report_number: null, police_officer: null,
+    resolution_notes: 'Pasajera estabilizada, trasladada a Hospital Regional',
+    resolved_date: new Date(Date.now() - 5 * 24 * 3600000 + 2 * 3600000).toISOString(),
+    insurance_claim_number: 'INS-2026-018', estimated_loss: null,
+    created_at: new Date(Date.now() - 5 * 24 * 3600000).toISOString(),
+    updated_at: new Date(Date.now() - 5 * 24 * 3600000 + 2 * 3600000).toISOString(),
+  },
+  {
+    id: 'inc-4', incident_number: 'INC-2026-004',
+    type: 'suspicious_behavior', severity: 'medium', status: 'reported',
+    title: 'Comportamiento sospechoso detectado por IA', description: 'Sistema CCTV con IA detecta a sujeto merodeando paradero por más de 40 minutos.',
+    incident_date: new Date(Date.now() - 1 * 3600000).toISOString(),
+    reported_date: new Date(Date.now() - 50 * 60000).toISOString(),
+    location: 'Terminal Vegueta', vehicle_id: null, trip_id: null, terminal_id: 'term-vegueta',
+    reported_by: 'Sistema IA', reporter_role: 'admin', affected_passengers: [],
+    suspect_description: 'Hombre, 30-40 años, mochila negra grande', suspect_photo_url: null,
+    cctv_video_urls: ['https://placeholder.cdn/cctv-inc4.mp4'],
+    photo_evidence_urls: [], witness_statements: [],
+    police_notified: false, police_report_number: null, police_officer: null,
+    resolution_notes: null, resolved_date: null, insurance_claim_number: null, estimated_loss: null,
+    created_at: new Date(Date.now() - 50 * 60000).toISOString(),
+    updated_at: new Date(Date.now() - 50 * 60000).toISOString(),
+  },
+  ...Array.from({ length: 8 }, (_, i) => {
+    const idx = i + 5
+    const types: SecurityIncident['type'][] = ['lost_item', 'harassment', 'theft', 'vehicle_breakdown', 'lost_item', 'suspicious_behavior', 'lost_item', 'theft']
+    const severities: SecurityIncident['severity'][] = ['low', 'medium', 'medium', 'medium', 'low', 'low', 'low', 'medium']
+    const statuses: SecurityIncident['status'][] = ['closed', 'resolved', 'resolved', 'closed', 'closed', 'closed', 'resolved', 'closed']
+    const daysAgo = 7 + i * 3
+    return {
+      id: `inc-${idx}`, incident_number: `INC-2026-00${idx}`,
+      type: types[i], severity: severities[i], status: statuses[i],
+      title: ['Maleta extraviada', 'Discusión entre pasajeros', 'Hurto de mochila', 'Falla mecánica menor', 'Documento olvidado', 'Persona ebria en paradero', 'Lentes olvidados', 'Hurto de billetera'][i],
+      description: 'Caso resuelto satisfactoriamente. Documentación archivada.',
+      incident_date: new Date(Date.now() - daysAgo * 24 * 3600000).toISOString(),
+      reported_date: new Date(Date.now() - daysAgo * 24 * 3600000).toISOString(),
+      location: i % 2 === 0 ? `Vehículo #${(i % 50) + 1}` : i % 3 === 0 ? 'Terminal Vegueta' : 'Terminal Huacho',
+      vehicle_id: i % 2 === 0 ? `v-${(i % 50) + 1}` : null, trip_id: null,
+      terminal_id: i % 2 !== 0 ? (i % 3 === 0 ? 'term-vegueta' : 'term-huacho') : null,
+      reported_by: passengerNames[i % passengerNames.length], reporter_role: 'passenger',
+      affected_passengers: [], suspect_description: null, suspect_photo_url: null,
+      cctv_video_urls: [], photo_evidence_urls: [], witness_statements: [],
+      police_notified: i === 7, police_report_number: i === 7 ? 'PNP-HUA-2026-0034' : null, police_officer: null,
+      resolution_notes: 'Resuelto', resolved_date: new Date(Date.now() - (daysAgo - 1) * 24 * 3600000).toISOString(),
+      insurance_claim_number: null, estimated_loss: i === 7 ? 250 : null,
+      created_at: new Date(Date.now() - daysAgo * 24 * 3600000).toISOString(),
+      updated_at: new Date(Date.now() - (daysAgo - 1) * 24 * 3600000).toISOString(),
+    } as SecurityIncident
+  }),
+]
+
+// --- CCTV Cameras ---
+export const mockCameras: CCTVCamera[] = [
+  // Terminal Vegueta cameras
+  ...Array.from({ length: 6 }, (_, i) => ({
+    id: `cam-t1-${i + 1}`, camera_code: `CAM-T01-A${i + 1}`,
+    name: ['Entrada Principal', 'Sala de Espera', 'Zona de Boletería', 'Andén Salida', 'Estacionamiento', 'Salida Trasera'][i],
+    location: (i < 2 ? 'terminal_entry' : i < 4 ? 'terminal_boarding' : 'parking_lot') as CCTVCamera['location'],
+    terminal_id: 'term-vegueta', vehicle_id: null,
+    has_facial_recognition: i < 4, has_motion_detection: true, has_night_vision: i >= 3,
+    resolution: i < 2 ? '4K' : '1080p', storage_days: 30,
+    status: (i === 5 ? 'maintenance' : 'recording') as CCTVCamera['status'],
+    last_ping: new Date(Date.now() - (i === 5 ? 3 * 3600000 : 60000)).toISOString(),
+    last_recording_url: null, installed_date: '2025-08-15',
+    ip_address: `192.168.1.${100 + i}`, notes: null,
+  })),
+  // Terminal Huacho cameras
+  ...Array.from({ length: 6 }, (_, i) => ({
+    id: `cam-t2-${i + 1}`, camera_code: `CAM-T02-B${i + 1}`,
+    name: ['Entrada Principal', 'Sala de Espera', 'Boletería', 'Andén Salida', 'Andén Llegada', 'Estacionamiento'][i],
+    location: (i < 2 ? 'terminal_entry' : i < 5 ? 'terminal_boarding' : 'parking_lot') as CCTVCamera['location'],
+    terminal_id: 'term-huacho', vehicle_id: null,
+    has_facial_recognition: i < 4, has_motion_detection: true, has_night_vision: true,
+    resolution: i < 3 ? '4K' : '1080p', storage_days: 30, status: 'recording' as CCTVCamera['status'],
+    last_ping: new Date().toISOString(), last_recording_url: null, installed_date: '2025-09-01',
+    ip_address: `192.168.2.${100 + i}`, notes: null,
+  })),
+  // Vehicle interior cameras (15 vehicles equipped)
+  ...Array.from({ length: 15 }, (_, i) => ({
+    id: `cam-v-${i + 1}`, camera_code: `CAM-V${String(i + 1).padStart(3, '0')}`,
+    name: `Interior Vehículo #${i + 1}`, location: 'vehicle_interior' as CCTVCamera['location'],
+    terminal_id: null, vehicle_id: `v-${i + 1}`,
+    has_facial_recognition: false, has_motion_detection: true, has_night_vision: true,
+    resolution: '1080p', storage_days: 7,
+    status: (i === 12 ? 'offline' : 'recording') as CCTVCamera['status'],
+    last_ping: new Date(Date.now() - (i === 12 ? 6 * 3600000 : 120000)).toISOString(),
+    last_recording_url: null, installed_date: '2025-10-20',
+    ip_address: null, notes: i === 12 ? 'Cámara con falla, reemplazo programado' : null,
+  })),
+]
+
+// --- SOS Alerts ---
+export const mockSOSAlerts: SOSAlert[] = [
+  {
+    id: 'sos-1', triggered_by: 'driver', user_id: 'd-7', vehicle_id: 'v-7', trip_id: 't-15',
+    lat: -11.0625, lng: -77.6254,
+    triggered_at: new Date(Date.now() - 5 * 24 * 3600000).toISOString(),
+    responded_at: new Date(Date.now() - 5 * 24 * 3600000 + 4 * 60000).toISOString(),
+    resolved_at: new Date(Date.now() - 5 * 24 * 3600000 + 30 * 60000).toISOString(),
+    status: 'resolved', description: 'Emergencia médica de pasajera', responder: 'PNP - Sof. Ramírez',
+  },
+  {
+    id: 'sos-2', triggered_by: 'driver', user_id: 'd-12', vehicle_id: 'v-12', trip_id: null,
+    lat: -11.0875, lng: -77.6189,
+    triggered_at: new Date(Date.now() - 10 * 60000).toISOString(),
+    responded_at: new Date(Date.now() - 8 * 60000).toISOString(),
+    resolved_at: null, status: 'responded', description: 'Hurto en curso', responder: 'PNP-Huaura',
+  },
+]
+
+// --- Security Stats ---
+export const mockSecurityStats: SecurityStats = {
+  total_check_ins_today: 248,
+  total_passengers_active: 42,
+  facial_recognition_rate: 78.5,
+  active_incidents: 2,
+  resolved_incidents_month: 14,
+  cameras_online: 25,
+  cameras_total: 27,
+  avg_response_time_minutes: 4.2,
+  identity_verification_rate: 94.3,
+  sos_alerts_today: 1,
+}
