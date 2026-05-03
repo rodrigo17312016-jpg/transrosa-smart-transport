@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import {
   Bus,
   Users,
@@ -19,6 +20,7 @@ import {
   ChevronRight,
   Fuel,
   Wrench,
+  ShieldAlert,
 } from 'lucide-react'
 import {
   AreaChart,
@@ -192,16 +194,26 @@ export default function DashboardPage() {
             Resumen operativo en tiempo real -- Ruta RI-06 Vegueta - Huacho
           </p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-400">
-          <Clock className="w-4 h-4" />
-          <span>
-            Ultima actualizacion:{' '}
-            {new Date().toLocaleTimeString('es-PE', {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </span>
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="flex items-center gap-3">
+          <Link
+            href="/reportar"
+            className="group relative inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-br from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-bold shadow-lg shadow-red-300/50 ring-2 ring-red-400/30 ring-offset-1 transition-all hover:scale-[1.02]"
+          >
+            <span className="absolute inset-0 rounded-xl bg-red-400/40 animate-ping opacity-50" />
+            <ShieldAlert className="relative w-4 h-4" />
+            <span className="relative tracking-wide">SOS / Reportar</span>
+          </Link>
+          <div className="flex items-center gap-2 text-sm text-gray-400">
+            <Clock className="w-4 h-4" />
+            <span>
+              Ultima actualizacion:{' '}
+              {new Date().toLocaleTimeString('es-PE', {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          </div>
         </div>
       </div>
 
